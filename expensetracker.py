@@ -4,6 +4,7 @@ from flask_mysqldb import MySQL
 #! initialize Flask app
 expensetracker=Flask(__name__)
 
+#! I was using an sql database but now it should be handled by localstorage
 #! Connection to database
 expensetracker.config['MYSQL_HOST']='sql8.freesqldatabase.com'
 expensetracker.config['MYSQL_USER']='sql8750720'
