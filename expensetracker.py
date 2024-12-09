@@ -55,7 +55,7 @@ def sum():
     cur = mysql.connection.cursor()
     cur.execute('SELECT SUM(Amount) as Total FROM expenses')
     result = cur.fetchone()
-    total = result[0] if result[0] is not None else 0 
+    total = result[0] if result[0] is not None else 0
     return str(total)
 
 #! run server

@@ -73,9 +73,6 @@ input {
     animation: buttonhover 2s infinite;
 }
 
-.table-container td:first-child {
-    display: none;
-}
 
 
 @keyframes buttonhover{
