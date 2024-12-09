@@ -1,0 +1,281 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 25px;
+    background-color: rgb(39, 0, 39);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 60px;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 25px;
+    color: rgb(255, 255, 255);
+    padding-bottom: 40px;
+}
+
+.fox{
+    width: 250px;
+}
+
+.userinputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.form {
+    margin: 20px 10px;
+    max-width: 500px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    color: rgb(25, 219, 128);
+    margin-bottom: 5px;
+}
+
+input {
+    margin-bottom: 15px;
+    height: 30px;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.savebtn {
+    font-size: 20px;
+    height: 40px;
+    width: 150px;
+    border-radius: 12px;
+    background-color: aquamarine;
+    border: none;
+}
+
+.savebtn:hover {    
+    cursor: pointer;
+    opacity: 0.7;
+    outline: aquamarine 2px solid;
+    animation: buttonhover 2s infinite;
+}
+
+.table-container td:first-child {
+    display: none;
+}
+
+
+@keyframes buttonhover{
+    0%{
+
+}
+    50%{
+    outline-offset: 10px;
+}
+    100%{
+    outline: none;
+}
+}
+
+.maindata {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-container2 {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    min-width: 600px;
+}
+
+table {
+    width: 100%;
+    min-width: 700px;
+}
+
+th {
+    background-color: white;
+    color: black;
+    font-size: 24px;
+    padding: 15px;
+}
+
+th, td {
+    border: 1px solid;
+    text-align: center;
+    padding: 15px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.totalbox {
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.delete {
+    background-color: rgb(0, 68, 0);
+    font-size: 16px;
+}
+
+.delete a {
+    color: white;
+    text-decoration: none;
+}
+
+.deleteall {
+    margin-top: 20px;
+    text-align: center;
+    color: red;
+    font-size: 20px;
+}
+
+.deleteall a {
+    color: aquamarine;
+    text-decoration: none;
+}
+
+.warning {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+/* Media Queries*/
+
+@media screen and (max-width: 700px) {
+    .table-container {
+        overflow-x: auto;
+    }
+    .table-container2 {
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 700px) and (min-width: 501px) {
+    table {
+        width: 100%; 
+        min-width: unset; 
+    }
+    th, td {
+        padding: 15px;
+        font-size: 14px; 
+        white-space: nowrap;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .savebtn {
+        font-size: 16px;
+        height: 35px;
+        width: 120px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+    .table-container2 {
+        overflow-x: auto;
+    }
+
+    table {
+        font-size: 14px;
+        min-width: 400px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .deleteall {
+        font-size: 16px;
+    }
+
+    .warning {
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (max-width: 386px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    input {
+        font-size: 12px;
+    }
+
+    .savebtn {
+        font-size: 14px;
+        height: 30px;
+        width: 100px;
+    }
+
+    table {
+        font-size: 12px;
+        min-width: 350px; 
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    .deleteall {
+        font-size: 14px;
+    }
+
+    .warning {
+        font-size: 10px;
+    }
+}

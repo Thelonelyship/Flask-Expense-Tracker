@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header"><h1>Expense Tracker App</h1></div>
+    <div class="userinputs">
+        <img src="static/expensefox.png" alt="fox with expense log" class="fox">
+        <div class="form">
+            <form action="{{url_for('insert')}}" method="post">
+                <label for="category">Category: Type of Expense:</label>
+                <input type="text" id="category" name="category" placeholder="Bills, Transport, Entertainment, etc.">
+                <br>
+                <label for="amount">Amount: How much did you spend?</label>
+                <input type="number" min="0" id="amount" name="amount" placeholder="Numbers only:">
+                <br>
+                <label for="description">Description: What did you spend it on?</label>
+                <input type="text" id="description" name="description" placeholder="Enter a description:">
+                <br>
+                <button type="submit" class="savebtn">Save</button>
+            </form>
+        </div>
+</div>
+    <div class="maindata">
+        <div class="data">
+            <table class="table-container">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in expenses %}
+                    <tr>
+                        <td>{{row.0}}</td>
+                        <td>{{row.1}}</td>
+                        <td>{{row.2}}</td>
+                        <td>{{row.3}}</td>
+                        <td class="delete"><a href="/delete/{{row.0}}">Click to Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <table class="table-container2">
+                    <tr>
+                        <td colspan="5" class="totalbox">Running Expense Total: &emsp; &emsp;<span id="total"></span></td>
+                    </tr>
+               
+            </table>
+            <div class="deleteall"><a href="/deleteall" class="deleteall">Click here to clear all <br></a>
+            <p class="warning">Warning: You will lose all of the data and won't be able to get it back.</p>
+            </div>
+            
+        </div>
+</div>
+
+
+    <script>
+        fetch('/SUM')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('total').innerText = data;
+            })
+            .catch(error => console.error("Couldn't get your total!", error));
+    </script>
+</body>
+</html>
