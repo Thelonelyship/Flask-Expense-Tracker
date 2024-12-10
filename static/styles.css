@@ -129,6 +129,11 @@ th, td {
     padding: 15px;
 }
 
+td a{
+    font-size: 30px;
+    color:aquamarine;
+}
+
 .table-container {
     overflow-x: auto;
 }

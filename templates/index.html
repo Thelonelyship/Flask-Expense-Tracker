@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
     <div class="header"><h1>Expense Tracker App</h1></div>
     <div class="userinputs">
     <img src="static/expensefox.png" alt="fox with expense log" class="fox">
         <div class="form">
-            <form id="expenseform">
+            <form action="/insert" method="POST" id="expenseform">
                 <label for="category">Category: Type of Expense:</label>
                 <input type="text" id="category" name="category" placeholder="Bills, Transport, Entertainment, etc.">
                 <br>
@@ -24,7 +23,7 @@
                 <br>
                 <button type="submit" class="savebtn">Save</button>
             </form>
-</div>
+        </div>
     </div>
 
     <div class="maindata">
@@ -40,11 +39,11 @@
                 </thead>
                 <tbody id="expenselist">
                     {% for row in expenses %}
-                    <tr id="expense-{{ row.0 }}">
-                        <td>{{ row.1 }}</td>
-                        <td>{{ row.2 }}</td>
-                        <td>{{ row.3 }}</td>
-                        <td><button class="delete-btn" onclick="deleteExpense('{{ row.0 }}')">Delete</button></td>
+                    <tr id="expense-{{ row[0] }}">
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td><a href="/delete/{{ row[0] }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -52,13 +51,16 @@
 
             <table class="table-container2">
                 <tr>
-                    <td colspan="5" class="totalbox">Running Expense Total: &emsp; &emsp;<span id="total"></span></td>
+                    <td colspan="5" class="totalbox">
+                        Running Expense Total: &emsp; &emsp;<span id="total">{{ total }}</span>
+                    </td>
                 </tr>
             </table>
 
             <div class="deleteall">
-                <a href="#" class="deleteall" onclick="deleteAll()">Click here to clear all</a>
+                <a href="/deleteall" class="deleteall">Click here to clear all</a>
                 <p class="warning">Warning: You will lose all of the data and won't be able to get it back.</p>
+                <p class="warning">This also applies if you close the window.</p>
             </div>
         </div>
     </div>
