@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='loginstyle.css') }}">
+</head>
+<body>
+    <h1 class="header">Expense Tracker</h1>
+    <h2 class="header2">Log in</h2>
+    <img src="/static/expensefox.png" width="250px" alt="">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="errors">
+                {% for category, message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div class="loginbox">
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <p><br>No account? No problem! <a href="{{ url_for('register') }}">Register here</a></p>
+</div>
+</body>
+</html>

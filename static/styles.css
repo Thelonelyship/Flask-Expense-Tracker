@@ -6,6 +6,7 @@
 }
 
 body {
+    max-height: 100vh;
     margin-top: 25px;
     background-color: rgb(39, 0, 39);
     color: white;
@@ -73,8 +74,6 @@ input {
     animation: buttonhover 2s infinite;
 }
 
-
-
 @keyframes buttonhover{
     0%{
 
@@ -87,31 +86,31 @@ input {
 }
 }
 
-.maindata {
+.maindata{
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.table-container {
+.table-container{
     width: 100%;
     overflow-x: auto;
 }
 
-.table-container2 {
+.table-container2{
     width: 100%;
     overflow-x: auto;
 }
 
-table {
+table{
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
     min-width: 600px;
 }
 
-table {
+table{
     width: 100%;
     min-width: 700px;
 }
@@ -123,7 +122,7 @@ th {
     padding: 15px;
 }
 
-th, td {
+th, td{
     border: 1px solid;
     text-align: center;
     padding: 15px;
@@ -134,11 +133,11 @@ td a{
     color:aquamarine;
 }
 
-.table-container {
+.table-container{
     overflow-x: auto;
 }
 
-.totalbox {
+.totalbox{
     border: none;
     font-size: 20px;
     text-align: center;
@@ -146,34 +145,46 @@ td a{
     font-weight: bold;
 }
 
-.delete {
+.delete{
     background-color: rgb(0, 68, 0);
     font-size: 16px;
 }
 
-.delete a {
+.delete a{
     color: white;
     text-decoration: none;
 }
 
 .deleteall {
-    margin-top: 20px;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     color: red;
     font-size: 20px;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    width: 60vw;
+    gap: 20px;
 }
 
-.deleteall a {
+.deleteall a.logout, 
+.deletealllink {
     color: aquamarine;
     text-decoration: none;
-}
-
-.warning {
-    margin-top: 10px;
-    font-size: 16px;
+    display: inline-block;
     text-align: center;
+    padding: 10px;
+    border: 1px solid antiquewhite;
 }
 
+.deleteall a.logout:hover {
+    color: rgb(4, 0, 255);
+}
+
+.deleteall .warning {
+    grid-column: 1;
+    font-size: 15px;
+}
 
 /* Media Queries*/
 
