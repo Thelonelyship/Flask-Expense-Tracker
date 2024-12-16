@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+from sqlalchemy import text
+from werkzeug.security import generate_password_hash, check_password_hash
 
 #! Initialize Flask app
 expensetracker = Flask(__name__)
@@ -19,10 +21,10 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = db.session.execute('SELECT user_id, password FROM users WHERE username = :username', {'username': username}).fetchone()
+        user = db.session.execute(text('SELECT user_id, password FROM users WHERE username = :username'), {'username': username}).fetchone()
         if user:
             stored_password = user[1]
-            if stored_password == password:
+            if check_password_hash(stored_password, password):
                 session['user_id'] = user[0]
                 return redirect(url_for('index'))
             else:
@@ -38,13 +40,14 @@ def register():
         username = request.form['username']
         password = request.form['password']
         user_id = str(uuid.uuid4())
-        existing_user = db.session.execute('SELECT username FROM users WHERE username = :username', {'username': username}).fetchone()
+        existing_user = db.session.execute(text('SELECT username FROM users WHERE username = :username'), {'username': username}).fetchone()
         if existing_user:
             flash('Someone stole your name. Try a new one!', 'error')
         else:
+            hashed_password = generate_password_hash(password)
             try:
-                db.session.execute('INSERT INTO users (user_id, username, password) VALUES (:user_id, :username, :password)', 
-                {'user_id': user_id, 'username': username, 'password': password})
+                db.session.execute(text('INSERT INTO users (user_id, username, password) VALUES (:user_id, :username, :password)'), 
+                {'user_id': user_id, 'username': username, 'password': hashed_password})
                 db.session.commit()
                 flash('Registration done! You can log in if you want.', 'success')
                 return redirect(url_for('login'))
@@ -64,15 +67,14 @@ def index():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     user_id = session['user_id']
-    expenses = db.session.execute('SELECT id, category, amount, description FROM expenses WHERE user_id = :user_id', {'user_id': user_id}).fetchall()
-    total = db.session.execute('SELECT SUM(amount) as total FROM expenses WHERE user_id = :user_id', {'user_id': user_id}).fetchone()[0]
+    expenses = db.session.execute(text('SELECT id, category, amount, description FROM expenses WHERE user_id = :user_id'), {'user_id': user_id}).fetchall()
+    total = db.session.execute(text('SELECT SUM(amount) as total FROM expenses WHERE user_id = :user_id'), {'user_id': user_id}).fetchone()[0]
     return render_template('index.html', expenses=expenses, total=total)
 
 #! Insert data
 @expensetracker.route('/insert', methods=['POST'])
 def insert():
     if 'user_id' not in session:
-        flash('You need to be logged in to add expenses.', 'error')
         return redirect(url_for('login'))
     user_id = session['user_id']
     category = request.form['category']
@@ -83,7 +85,7 @@ def insert():
         return redirect(url_for('index'))
     amount = float(amount)
     try:
-        db.session.execute('INSERT INTO expenses (category, amount, description, user_id) VALUES (:category, :amount, :description, :user_id)',
+        db.session.execute(text('INSERT INTO expenses (category, amount, description, user_id) VALUES (:category, :amount, :description, :user_id)'),
             {'category': category, 'amount': amount, 'description': description, 'user_id': user_id})
         db.session.commit()
         flash('Expense added successfully!', 'success')
@@ -95,7 +97,7 @@ def insert():
 @expensetracker.route('/delete/<string:id>', methods=['GET'])
 def delete(id):
     user_id = session['user_id']
-    db.session.execute('DELETE FROM expenses WHERE id = :id AND user_id = :user_id', {'id': id, 'user_id': user_id})
+    db.session.execute(text('DELETE FROM expenses WHERE id = :id AND user_id = :user_id'), {'id': id, 'user_id': user_id})
     db.session.commit()
     return redirect(url_for('index'))
 
@@ -103,7 +105,7 @@ def delete(id):
 @expensetracker.route('/deleteall', methods=['GET'])
 def delete_all():
     user_id = session['user_id']
-    db.session.execute('DELETE FROM expenses WHERE user_id = :user_id', {'user_id': user_id})
+    db.session.execute(text('DELETE FROM expenses WHERE user_id = :user_id'), {'user_id': user_id})
     db.session.commit()
     return redirect(url_for('index'))
 
